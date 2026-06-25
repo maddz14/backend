@@ -189,5 +189,3 @@ async def seed_all(supabase):
         docs = [{**g, "created_at": now} for g in GALERI]
         supabase.table("galeri").insert(docs).execute()
 
-    if not supabase.table("project").select("id").execute().data:
-        supabase.table("project").insert(PROJECT).execute()

@@ -50,6 +50,17 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # ---------- App ----------
 app = FastAPI(title="Kabinet Samudera API")
+
+# Setup CORS
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000").rstrip("/")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[FRONTEND_URL, "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 api_router = APIRouter(prefix="/api")
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
