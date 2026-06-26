@@ -173,6 +173,7 @@ async def login(payload: LoginRequest, request: Request, response: Response):
         "email": user["email"],
         "name": user.get("name", ""),
         "role": user.get("role", "user"),
+        "access_token": access,
     }
 
 
