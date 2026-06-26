@@ -1,8 +1,11 @@
 """Authentication helpers: password hashing, JWT tokens, dependency."""
 import os
+# pyrefly: ignore [missing-import]
 import bcrypt
+# pyrefly: ignore [missing-import]
 import jwt
 from datetime import datetime, timezone, timedelta
+# pyrefly: ignore [missing-import]
 from fastapi import HTTPException, Request, Response
 
 JWT_ALGORITHM = "HS256"
@@ -48,8 +51,8 @@ def set_auth_cookies(response: Response, access_token: str, refresh_token: str):
         key="access_token",
         value=access_token,
         httponly=True,
-        secure=False,   # set True only in production HTTPS
-        samesite="lax",
+        secure=True,    # WAJIB True untuk cross-origin
+        samesite="none", # WAJIB 'none' untuk beda domain (Vercel & Render)
         max_age=ACCESS_TOKEN_MAX_AGE,
         path="/",
     )
@@ -57,8 +60,8 @@ def set_auth_cookies(response: Response, access_token: str, refresh_token: str):
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=False,   # set True only in production HTTPS
-        samesite="lax",
+        secure=True,
+        samesite="none",
         max_age=REFRESH_TOKEN_MAX_AGE,
         path="/",
     )
